@@ -1,35 +1,34 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, TextInput, Text} from 'react-native';
 
-const TextInputApp = () => {
-  const [number, onChangeNumber] = React.useState(null);
+import {StatusBar, ScrollView} from 'react-native';
 
+import styled from 'styled-components/native';
+
+import AppBar from './components/AppBar';
+import ToolBar from './components/ToolBar';
+import Users from './components/Users';
+import Story from './components/Story';
+import Feed from './components/Feed';
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+`;
+
+const App = () => {
   return (
-    <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        textAlign={'center'}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="input number..."
-        keyboardType="numeric"
-      />
-      <Text style={styles.center}>{number}</Text>
-    </SafeAreaView>
+    <>
+      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+      <Container>
+        <ScrollView>
+          <AppBar />
+          <ToolBar />
+          <Users />
+          <Story />
+          <Feed />
+        </ScrollView>
+      </Container>
+    </>
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    height: 70,
-    margin: 30,
-    fontSize: 30,
-    borderWidth: 3,
-  },
-  center: {
-    alignSelf: 'center',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-});
-export default TextInputApp;
+export default App;
