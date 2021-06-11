@@ -2,12 +2,16 @@ import React from 'react';
 
 import styled from 'styled-components/native';
 
+interface StoryProps {
+  readonly story: any;
+}
+
 const Container = styled.View`
   width: 40px;
   height: 40px;
   position: relative;
 `;
-const User = styled.Image`
+const User = styled.Image<StoryProps>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -26,7 +30,15 @@ const UserActive = styled.View`
   border-color: #ffffff;
 `;
 
-const Avatar = ({source, online, story}) => {
+const Avatar = ({
+  source,
+  online,
+  story,
+}: {
+  source?: any;
+  online?: any;
+  story?: any;
+}) => {
   return (
     <Container>
       <User source={source} story={story} />

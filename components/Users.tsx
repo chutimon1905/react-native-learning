@@ -4,8 +4,6 @@ import {ScrollView} from 'react-native';
 
 import styled from 'styled-components/native';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import {Icon} from 'react-native-gradient-icon';
 
 import Avatar from './Avatar';
@@ -31,7 +29,7 @@ const Text = styled.Text`
   color: #1777f2;
   font-size: 12px;
   padding-left: 6px;
-  flex: 0.33;
+  flex: 1;
 `;
 const User = styled.View`
   margin-right: 13px;

@@ -114,7 +114,7 @@ const Feed = () => {
           <Entypo name="dots-three-horizontal" size={15} color="#222121" />
         </Header>
 
-        <Post>Hello React naive !.</Post>
+        <Post>Hello React Native !.</Post>
         <Photo source={require('../assets/post1.jpg')} />
 
         <Footer>
@@ -123,9 +123,9 @@ const Feed = () => {
               <IconCount>
                 <AntDesign name="like1" size={12} color="#FFFFFF" />
               </IconCount>
-              <TextCount>88 likes</TextCount>
+              <TextCount>9 likes</TextCount>
             </Row>
-            <TextCount>2k comments</TextCount>
+            <TextCount>4 comments</TextCount>
           </FooterCount>
 
           <Separator />
@@ -192,7 +192,7 @@ const Feed = () => {
               </IconCount>
               <TextCount>80k likes</TextCount>
             </Row>
-            <TextCount>2k comments</TextCount>
+            <TextCount>2k comments 9k Shares</TextCount>
           </FooterCount>
 
           <Separator />
