@@ -2,16 +2,12 @@ import React from 'react';
 
 import styled from 'styled-components/native';
 
-interface StoryProps {
-  readonly story: any;
-}
-
 const Container = styled.View`
   width: 40px;
   height: 40px;
   position: relative;
 `;
-const User = styled.Image<StoryProps>`
+const User = styled.Image<{story: any}>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
