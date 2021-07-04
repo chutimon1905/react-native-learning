@@ -1,33 +1,22 @@
 import React from 'react';
-
-import {StatusBar, ScrollView} from 'react-native';
-
+import {StatusBar} from 'react-native';
 import styled from 'styled-components/native';
-
-import AppBar from './components/AppBar';
-import ToolBar from './components/ToolBar';
-import Users from './components/Users';
-import Story from './components/Story';
-import Feed from './components/Feed';
+import Home from './src/containers/Home';
+import {Provider} from 'react-redux';
+import {store} from './src/redux/store';
 
 const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <>
+    <Provider store={store}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
       <Container>
-        <ScrollView>
-          <AppBar />
-          <ToolBar />
-          <Users />
-          <Story />
-          <Feed />
-        </ScrollView>
+        <Home />
       </Container>
-    </>
+    </Provider>
   );
 };
 
