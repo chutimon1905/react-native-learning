@@ -22,14 +22,14 @@ const Row = styled.View`
   align-items: center;
 `;
 const Input = styled.TextInput`
-  height: 50px;
+  height: 55px;
   width: 100%;
   padding: 0 8px;
 `;
 const Divider = styled.View`
   width: 100%;
   height: 0.5px;
-  background: #f0f0f0;
+  background: #e4e6eb;
 `;
 const Menu = styled.View`
   flex: 1;
@@ -39,18 +39,18 @@ const Menu = styled.View`
   height: 42px;
 `;
 const MenuText = styled.Text`
-  padding-left: 11px;
+  padding-left: 5px;
   font-weight: 500;
   font-size: 12px;
 `;
 const Separator = styled.View`
   width: 1px;
-  height: 26px;
-  background: #f0f0f0;
+  height: 24px;
+  background: #e4e6eb;
 `;
 const BottomDivider = styled.View`
   width: 100%;
-  height: 9px;
+  height: 6px;
   background: #d1d1d1;
 `;
 
@@ -58,6 +58,7 @@ const ToolBar = () => {
   return (
     <>
       <Container>
+        <Divider />
         <Row>
           <Avatar source={require('../assets/user1.jpg')} />
           <Input placeholder="What's on your mind?" />
@@ -84,7 +85,7 @@ const ToolBar = () => {
             <MaterialCommunityIcons
               name="video-plus"
               size={22}
-              color="#E141FC"
+              color="#9c6dfb"
             />
             <MenuText>Room</MenuText>
           </Menu>

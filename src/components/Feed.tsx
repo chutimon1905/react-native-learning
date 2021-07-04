@@ -28,7 +28,7 @@ const Row = styled.View`
   flex-direction: row;
 `;
 const User = styled.Text`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   color: #222121;
 `;
@@ -37,7 +37,7 @@ const Time = styled.Text`
   color: #747476;
 `;
 const Post = styled.Text`
-  font-size: 12px;
+  font-size: 13px;
   color: #222121;
   line-height: 16px;
   padding: 0 11px;
@@ -85,12 +85,12 @@ const Icon = styled.View`
   margin-right: 6px;
 `;
 const Text = styled.Text`
-  font-size: 12px;
+  font-size: 13px;
   color: #424040;
 `;
 const BottomDivider = styled.View`
   width: 100%;
-  height: 9px;
+  height: 6px;
   background: #d1d1d1;
 `;
 

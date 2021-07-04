@@ -4,39 +4,45 @@ import {ScrollView} from 'react-native';
 
 import styled from 'styled-components/native';
 
-import {Icon} from 'react-native-gradient-icon';
-
 import Avatar from './Avatar';
 
 const Container = styled.View`
   width: 100%;
-  height: 58px;
-  flex-direction: row;
-  align-items: center;
+  height: 80px;
+  flex-direction: column;
+  padding: 0 11px;
 `;
 const Room = styled.TouchableOpacity`
-  width: 100px;
-  height: 40px;
+  width: 105px;
+  height: 35px;
   flex-direction: row;
   align-items: center;
-  border-radius: 20px;
-  border-width: 1px;
-  border-color: #82b1ff;
-  padding: 0 15px;
-  margin-right: 12px;
+  border-radius: 5px;
+  background-color: #e6f3fe;
+  justify-content: center;
+  margin-right: 10px;
+  margin-top: 10px;
 `;
 const Text = styled.Text`
-  color: #1777f2;
-  font-size: 12px;
-  padding-left: 6px;
-  flex: 1;
+  color: #1763cf;
+  font-size: 13px;
+  font-weight: bold;
+  padding-left: 1px;
+`;
+const Title = styled.Text`
+  margin-top: 10px;
+  color: #050605;
+  font-size: 13px;
+  font-weight: bold;
+  padding-left: 1px;
 `;
 const User = styled.View`
+  margin-top: 8px;
   margin-right: 13px;
 `;
 const BottomDivider = styled.View`
   width: 100%;
-  height: 9px;
+  height: 6px;
   background: #d1d1d1;
 `;
 
@@ -44,20 +50,9 @@ const Users = () => {
   return (
     <>
       <Container>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{paddingLeft: 11}}>
+        <Title>Audio & Video Rooms</Title>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <Room>
-            <Icon
-              size={26}
-              colors={[
-                {color: '#7341FC', offset: '0', opacity: '1'},
-                {color: '#E141FC', offset: '1', opacity: '1'},
-              ]}
-              type="material"
-              name="videocam"
-            />
             <Text>Create Room</Text>
           </Room>
           <User>
