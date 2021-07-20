@@ -3,7 +3,7 @@ import {StatusBar} from 'react-native';
 import styled from 'styled-components/native';
 import Home from './src/containers/Home';
 import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
+import store from './src/redux/store';
 
 const Container = styled.SafeAreaView`
   flex: 1;

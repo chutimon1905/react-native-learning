@@ -1,5 +1,4 @@
 import {ImageSourcePropType} from 'react-native';
-import {ImgInterface} from './common.types';
 import moment from 'moment';
 
 export interface UserInterface {
@@ -19,14 +18,13 @@ export interface PostInterface {
   datetime: moment.Moment;
   user: UserInterface;
   caption: string;
-  img: ImgInterface[];
+  img: ImageSourcePropType;
   likes: String[];
   comments: CommentInterface[];
 }
 
 export const UPDATE_FEED = 'UPDATE_FEED';
 export const LIKE_POST = 'LIKE_POST';
-
 interface UpdateFeedAction {
   type: typeof UPDATE_FEED;
   payload: PostInterface[];
