@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, View} from 'react-native';
 import styled from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Avatar from './Avatar';
 import {PostInterface} from '../redux/types';
 import {dateTimeToNowString, likeCount} from '../shared/commonHelper';
+import {connect} from 'react-redux';
 const userId = '1';
 
 const Container = styled.View`
@@ -99,92 +100,109 @@ const BottomDivider = styled.View`
 
 interface FeedProps {
   posts: PostInterface[];
-  onPostLike: (postId: String) => void;
 }
 
-const Post: React.FC<PostInterface & {onPostLike: (postId: String) => void}> =
-  ({id, datetime, user, img, caption, likes, comments, onPostLike}) => {
-    const {avatar, fullname} = user || {};
-    const isPostLiked = likes.find((like: String) => like == userId);
-    return (
-      <>
-        <Container>
-          <Header>
-            <Row>
-              <Avatar source={avatar} />
-              <View style={{paddingLeft: 10}}>
-                <User>{fullname}</User>
-                <Row>
-                  <Time>{dateTimeToNowString(datetime)}</Time>
-                  <Entypo name="dot-single" size={12} color="#747476" />
-                  <Entypo name="globe" size={10} color="#747476" />
-                </Row>
-              </View>
-            </Row>
+export const Post: React.FC<PostInterface> = ({
+  id,
+  datetime,
+  user,
+  img,
+  imgUri,
+  caption,
+  likes,
+  comments,
+}) => {
+  const [like, onLike] = useState(false);
 
-            <Entypo name="dots-three-horizontal" size={15} color="#222121" />
-          </Header>
-
-          <Caption>{caption}</Caption>
-          <Photo source={img} />
-
-          <Footer>
-            <FooterCount>
+  function toggleLikeButton() {
+    if (!like) onLike(true);
+    else onLike(false);
+  }
+  const {avatar, fullname} = user || {};
+  var isHaveImg: boolean = false;
+  if (img) isHaveImg = true;
+  return (
+    <>
+      <Container>
+        <Header>
+          <Row>
+            <Avatar source={avatar} />
+            <View style={{paddingLeft: 10}}>
+              <User>{fullname}</User>
               <Row>
-                <IconCount>
-                  <AntDesign name="like1" size={12} color="#FFFFFF" />
-                </IconCount>
-                <TextCount>{likeCount(likes)} Likes</TextCount>
+                <Time>{dateTimeToNowString(datetime)}</Time>
+                <Entypo name="dot-single" size={12} color="#747476" />
+                <Entypo name="globe" size={10} color="#747476" />
               </Row>
-              <TextCount>{comments.length} comments</TextCount>
-            </FooterCount>
+            </View>
+          </Row>
 
-            <Separator />
+          <Entypo name="dots-three-horizontal" size={15} color="#222121" />
+        </Header>
 
-            <FooterMenu>
-              <Button onPress={() => onPostLike(id)}>
-                <Icon>
-                  {isPostLiked ? (
-                    <AntDesign name="like1" size={20} color="#1878f3" />
-                  ) : (
-                    <AntDesign name="like2" size={20} />
-                  )}
-                </Icon>
-                {isPostLiked ? <TextClick>Like</TextClick> : <Text>Like</Text>}
-              </Button>
+        <Caption>{caption}</Caption>
+        {isHaveImg ? <Photo source={img} /> : <Photo source={{uri: imgUri}} />}
 
-              <Button>
-                <Icon>
-                  <MaterialCommunityIcons
-                    name="comment-outline"
-                    size={20}
-                    color="#424040"
-                  />
-                </Icon>
-                <Text>Comment</Text>
-              </Button>
+        <Footer>
+          <FooterCount>
+            <Row>
+              <IconCount>
+                <AntDesign name="like1" size={12} color="#FFFFFF" />
+              </IconCount>
+              <TextCount>
+                {like ? likeCount(likes.concat([userId])) : likeCount(likes)}{' '}
+                Likes
+              </TextCount>
+            </Row>
+            <TextCount>{comments?.length || 0} comments</TextCount>
+          </FooterCount>
 
-              <Button>
-                <Icon>
-                  <MaterialCommunityIcons
-                    name="share-outline"
-                    size={20}
-                    color="#424040"
-                  />
-                </Icon>
-                <Text>Share</Text>
-              </Button>
-            </FooterMenu>
-          </Footer>
-          <BottomDivider />
-        </Container>
-      </>
-    );
-  };
+          <Separator />
 
-const Feed: React.FC<FeedProps> = ({posts = [], onPostLike}) => {
+          <FooterMenu>
+            <Button onPress={() => toggleLikeButton()}>
+              <Icon>
+                {like ? (
+                  <AntDesign name="like1" size={20} color="#1878f3" />
+                ) : (
+                  <AntDesign name="like2" size={20} />
+                )}
+              </Icon>
+              {like ? <TextClick>Like</TextClick> : <Text>Like</Text>}
+            </Button>
+
+            <Button>
+              <Icon>
+                <MaterialCommunityIcons
+                  name="comment-outline"
+                  size={20}
+                  color="#424040"
+                />
+              </Icon>
+              <Text>Comment</Text>
+            </Button>
+
+            <Button>
+              <Icon>
+                <MaterialCommunityIcons
+                  name="share-outline"
+                  size={20}
+                  color="#424040"
+                />
+              </Icon>
+              <Text>Share</Text>
+            </Button>
+          </FooterMenu>
+        </Footer>
+        <BottomDivider />
+      </Container>
+    </>
+  );
+};
+
+const Feed: React.FC<FeedProps> = ({posts = []}) => {
   function renderItem({item}: {item: PostInterface}) {
-    return <Post {...item} onPostLike={onPostLike} />;
+    return <Post {...item} />;
   }
 
   return (
@@ -198,4 +216,8 @@ const Feed: React.FC<FeedProps> = ({posts = [], onPostLike}) => {
   );
 };
 
-export default Feed;
+const mapStateToProps = (state: any) => ({
+  post: state.post,
+});
+
+export default connect(mapStateToProps)(Feed);

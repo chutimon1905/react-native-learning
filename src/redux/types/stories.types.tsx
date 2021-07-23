@@ -1,9 +1,8 @@
 import {ImageSourcePropType} from 'react-native';
 import {UserInterface} from './feed.types';
-import moment from 'moment';
 
 export interface StoryInterface {
-  id: String;
+  id: number;
   user: UserInterface;
   img: ImageSourcePropType;
 }

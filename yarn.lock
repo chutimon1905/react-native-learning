@@ -710,6 +710,11 @@
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
 
+"@discordjs/collection@^0.1.4":
+  "integrity" "sha512-utRNxnd9kSS2qhyivo9lMlt5qgAUasH2gb7BEOn6p0efFh24gjGomHzWKMAPn2hEReOPQZCJaRKoURwRotKucQ=="
+  "resolved" "https://registry.npmjs.org/@discordjs/collection/-/collection-0.1.6.tgz"
+  "version" "0.1.6"
+
 "@emotion/is-prop-valid@^0.8.8":
   "integrity" "sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA=="
   "resolved" "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz"
@@ -1487,6 +1492,11 @@
   "version" "3.10.1"
   dependencies:
     "eslint-visitor-keys" "^1.1.0"
+
+"@ungap/url-search-params@^0.1.4":
+  "integrity" "sha512-RLwrxCTDNiNev9hpr9rDq8NyeQ8Nn0X1we4Wu7Tlf368I8r+7hBj3uObhifhuLk74egaYaSX5nUsBlWz6kjj+A=="
+  "resolved" "https://registry.npmjs.org/@ungap/url-search-params/-/url-search-params-0.1.4.tgz"
+  "version" "0.1.4"
 
 "abab@^2.0.3", "abab@^2.0.5":
   "integrity" "sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q=="
@@ -2443,6 +2453,13 @@
     "parse-json" "^5.0.0"
     "path-type" "^4.0.0"
     "yaml" "^1.7.2"
+
+"cross-fetch@^3.0.4":
+  "integrity" "sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ=="
+  "resolved" "https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.4.tgz"
+  "version" "3.1.4"
+  dependencies:
+    "node-fetch" "2.6.1"
 
 "cross-spawn@^6.0.0":
   "integrity" "sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ=="
@@ -5333,7 +5350,7 @@
   dependencies:
     "minimatch" "^3.0.2"
 
-"node-fetch@^2.2.0", "node-fetch@^2.6.0":
+"node-fetch@^2.2.0", "node-fetch@^2.6.0", "node-fetch@2.6.1":
   "integrity" "sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
   "version" "2.6.1"
@@ -5774,6 +5791,15 @@
     "base64-js" "^1.5.1"
     "xmlbuilder" "^9.0.7"
     "xmldom" "^0.5.0"
+
+"pokeapi-typescript@^2.1.0":
+  "integrity" "sha512-cpgV7sXvafDxgwfsta5VzNrz5aSBkidGYN0IvnpBjbMgIbEc9clHR8Ev/b7LdWZF9S4nNl/oExjtHfDyuZHV1A=="
+  "resolved" "https://registry.npmjs.org/pokeapi-typescript/-/pokeapi-typescript-2.1.0.tgz"
+  "version" "2.1.0"
+  dependencies:
+    "@discordjs/collection" "^0.1.4"
+    "@ungap/url-search-params" "^0.1.4"
+    "cross-fetch" "^3.0.4"
 
 "posix-character-classes@^0.1.0":
   "integrity" "sha1-AerA/jta9xoqbAL+q7jB/vfgDqs="

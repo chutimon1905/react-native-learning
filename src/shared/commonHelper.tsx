@@ -5,6 +5,7 @@ export function dateTimeToNowString(
   withoutSuffix?: boolean,
 ): String {
   const datetimeString = moment(datetime).fromNow(withoutSuffix);
+  console.log(datetimeString);
   return datetimeString.charAt(0).toUpperCase() + datetimeString.slice(1);
 }
 
