@@ -1,4 +1,4 @@
-import {ADD_NEW_POST, PostInterface} from '../types';
+import {ADD_NEW_POST, LIKE_POST, PostInterface} from '../types';
 
 const setAddPost = (post: PostInterface) => {
   return {

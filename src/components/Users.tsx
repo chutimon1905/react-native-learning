@@ -3,6 +3,8 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 
 import styled from 'styled-components/native';
+import {UserInterface} from '../redux/types';
+import {testData} from '../shared/testData';
 
 import Avatar from './Avatar';
 
@@ -55,21 +57,11 @@ const Users = () => {
           <Room>
             <Text>Create Room</Text>
           </Room>
-          <User>
-            <Avatar source={require('../assets/user1.jpg')} online={true} />
-          </User>
-          <User>
-            <Avatar source={require('../assets/user2.jpg')} online={true} />
-          </User>
-          <User>
-            <Avatar source={require('../assets/user3.jpg')} online={true} />
-          </User>
-          <User>
-            <Avatar source={require('../assets/user4.jpg')} online={true} />
-          </User>
-          <User>
-            <Avatar source={require('../assets/user5.jpg')} online={true} />
-          </User>
+          {testData.users.map(user => (
+            <User key={user.id}>
+              <Avatar source={user.avatar} online={true} />
+            </User>
+          ))}
         </ScrollView>
       </Container>
       <BottomDivider />

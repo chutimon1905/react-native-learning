@@ -40,7 +40,6 @@ const users: UserInterface[] = [
   userHermione,
 ];
 const stories: StoryInterface[] = [
-  {id: 1, user: userChutimon, img: require('../assets/story1.jpg')},
   {id: 2, user: userLisa, img: require('../assets/story2.jpg')},
   {id: 3, user: userHarry, img: require('../assets/story3.jpg')},
   {id: 4, user: userRon, img: require('../assets/story4.jpg')},

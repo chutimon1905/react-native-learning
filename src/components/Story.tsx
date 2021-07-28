@@ -7,10 +7,11 @@ import styled from 'styled-components/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Avatar from './Avatar';
+import {testData} from '../shared/testData';
 
 const Container = styled.View`
   width: 100%;
-  height: 248px;
+  height: 196px;
   padding: 0 11px;
 `;
 
@@ -24,13 +25,13 @@ const Row = styled.View`
 
 const Card = styled.View`
   width: 104px;
-  height: 183px;
+  height: 175px;
   position: relative;
   margin-right: 6px;
 `;
 const CardStory = styled.Image`
   width: 100%;
-  height: 183px;
+  height: 175px;
   border-radius: 12px;
 `;
 const CardUser = styled.View`
@@ -57,21 +58,6 @@ const Text = styled.Text`
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
 `;
 
-const Show = styled.TouchableOpacity`
-  width: 100%;
-  height: 35px;
-  border-radius: 5px;
-  background-color: #e6f3fe;
-  align-items: center;
-  justify-content: center;
-`;
-
-const TextShow = styled.Text`
-  color: #1763cf;
-  font-size: 13px;
-  font-weight: bold;
-`;
-
 const BottomDivider = styled.View`
   width: 100%;
   height: 6px;
@@ -93,42 +79,18 @@ const Story = () => {
                 <Text>Add To Story</Text>
               </CardFooter>
             </Card>
-
-            <Card>
-              <CardStory source={require('../assets/story2.jpg')} />
-              <CardUser>
-                <Avatar source={require('../assets/user2.jpg')} story={true} />
-              </CardUser>
-              <CardFooter>
-                <Text>Lisa M.</Text>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardStory source={require('../assets/story3.jpg')} />
-              <CardUser>
-                <Avatar source={require('../assets/user3.jpg')} story={true} />
-              </CardUser>
-              <CardFooter>
-                <Text>Anna O.</Text>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardStory source={require('../assets/story4.jpg')} />
-              <CardUser>
-                <Avatar source={require('../assets/user4.jpg')} story={true} />
-              </CardUser>
-              <CardFooter>
-                <Text>Adam L.</Text>
-              </CardFooter>
-            </Card>
+            {testData.stories.map(story => (
+              <Card key={story.id}>
+                <CardStory source={story.img} />
+                <CardUser>
+                  <Avatar source={story.user.avatar} story={true} />
+                </CardUser>
+                <CardFooter>
+                  <Text>{story.user.username}</Text>
+                </CardFooter>
+              </Card>
+            ))}
           </ScrollView>
-        </Row>
-        <Row>
-          <Show>
-            <TextShow>Show More</TextShow>
-          </Show>
         </Row>
       </Container>
       <BottomDivider />

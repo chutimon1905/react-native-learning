@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FlatList, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, FlatList, SafeAreaView, View} from 'react-native';
 import styled from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -7,11 +7,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Avatar from './Avatar';
 import {PostInterface} from '../redux/types';
 import {dateTimeToNowString, likeCount} from '../shared/commonHelper';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 const userId = '1';
 
 const Container = styled.View`
   flex: 1;
+`;
+
+const Loading = styled.View`
+  margin-top: 20px;
+  align-items: center;
 `;
 const Header = styled.View`
   height: 50px;
@@ -98,9 +103,20 @@ const BottomDivider = styled.View`
   background: #d1d1d1;
 `;
 
-interface FeedProps {
+const TextLoading = styled.Text`
+  font-size: 13px;
+  text-align: center;
+  color: #a9a9a9;
+`;
+
+interface IFeedProps {
   posts: PostInterface[];
+  isLoading: boolean;
 }
+
+const selectPostById = (state: any, postId: number) => {
+  return state.posts.find((post: PostInterface) => post.id === postId);
+};
 
 export const Post: React.FC<PostInterface> = ({
   id,
@@ -115,104 +131,127 @@ export const Post: React.FC<PostInterface> = ({
   const [like, onLike] = useState(false);
 
   function toggleLikeButton() {
-    if (!like) onLike(true);
-    else onLike(false);
+    if (!like && !likes.includes(userId)) {
+      onLike(true);
+      likes.push(userId);
+    } else {
+      onLike(false);
+      likes.pop();
+      console.log('now--->' + likes);
+    }
   }
+
+  useEffect(() => console.log('UseEffect says:', like));
+
   const {avatar, fullname} = user || {};
   var isHaveImg: boolean = false;
   if (img) isHaveImg = true;
   return (
     <>
-      <Container>
-        <Header>
-          <Row>
-            <Avatar source={avatar} />
-            <View style={{paddingLeft: 10}}>
-              <User>{fullname}</User>
-              <Row>
-                <Time>{dateTimeToNowString(datetime)}</Time>
-                <Entypo name="dot-single" size={12} color="#747476" />
-                <Entypo name="globe" size={10} color="#747476" />
-              </Row>
-            </View>
-          </Row>
-
-          <Entypo name="dots-three-horizontal" size={15} color="#222121" />
-        </Header>
-
-        <Caption>{caption}</Caption>
-        {isHaveImg ? <Photo source={img} /> : <Photo source={{uri: imgUri}} />}
-
-        <Footer>
-          <FooterCount>
+      <Header>
+        <Row>
+          <Avatar source={avatar} />
+          <View style={{paddingLeft: 10}}>
+            <User>{fullname}</User>
             <Row>
-              <IconCount>
-                <AntDesign name="like1" size={12} color="#FFFFFF" />
-              </IconCount>
-              <TextCount>
-                {like ? likeCount(likes.concat([userId])) : likeCount(likes)}{' '}
-                Likes
-              </TextCount>
+              <Time>{dateTimeToNowString(datetime)}</Time>
+              <Entypo name="dot-single" size={12} color="#747476" />
+              <Entypo name="globe" size={10} color="#747476" />
             </Row>
-            <TextCount>{comments?.length || 0} comments</TextCount>
-          </FooterCount>
+          </View>
+        </Row>
 
-          <Separator />
+        <Entypo name="dots-three-horizontal" size={15} color="#222121" />
+      </Header>
 
-          <FooterMenu>
-            <Button onPress={() => toggleLikeButton()}>
-              <Icon>
-                {like ? (
-                  <AntDesign name="like1" size={20} color="#1878f3" />
-                ) : (
-                  <AntDesign name="like2" size={20} />
-                )}
-              </Icon>
-              {like ? <TextClick>Like</TextClick> : <Text>Like</Text>}
-            </Button>
+      <Caption>{caption}</Caption>
+      {isHaveImg ? <Photo source={img} /> : <Photo source={{uri: imgUri}} />}
 
-            <Button>
-              <Icon>
-                <MaterialCommunityIcons
-                  name="comment-outline"
-                  size={20}
-                  color="#424040"
-                />
-              </Icon>
-              <Text>Comment</Text>
-            </Button>
+      <Footer>
+        <FooterCount>
+          <Row>
+            <IconCount>
+              <AntDesign name="like1" size={12} color="#FFFFFF" />
+            </IconCount>
+            <TextCount>
+              {/* {like ? likeCount(likes.concat([userId])) : likeCount(likes)}{' '} */}
+              {likeCount(likes)} Likes
+            </TextCount>
+          </Row>
+          <TextCount>{comments?.length || 0} comments</TextCount>
+        </FooterCount>
 
-            <Button>
-              <Icon>
-                <MaterialCommunityIcons
-                  name="share-outline"
-                  size={20}
-                  color="#424040"
-                />
-              </Icon>
-              <Text>Share</Text>
-            </Button>
-          </FooterMenu>
-        </Footer>
-        <BottomDivider />
-      </Container>
+        <Separator />
+
+        <FooterMenu>
+          <Button onPress={() => toggleLikeButton()}>
+            <Icon>
+              {like || likes.includes(userId) ? (
+                <AntDesign name="like1" size={20} color="#1878f3" />
+              ) : (
+                <AntDesign name="like2" size={20} />
+              )}
+            </Icon>
+            {like || likes.includes(userId) ? (
+              <TextClick>Like</TextClick>
+            ) : (
+              <Text>Like</Text>
+            )}
+          </Button>
+
+          <Button>
+            <Icon>
+              <MaterialCommunityIcons
+                name="comment-outline"
+                size={20}
+                color="#424040"
+              />
+            </Icon>
+            <Text>Comment</Text>
+          </Button>
+
+          <Button>
+            <Icon>
+              <MaterialCommunityIcons
+                name="share-outline"
+                size={20}
+                color="#424040"
+              />
+            </Icon>
+            <Text>Share</Text>
+          </Button>
+        </FooterMenu>
+      </Footer>
+      <BottomDivider />
     </>
   );
 };
 
-const Feed: React.FC<FeedProps> = ({posts = []}) => {
-  function renderItem({item}: {item: PostInterface}) {
-    return <Post {...item} />;
-  }
-
-  return (
-    <FlatList
-      data={posts}
-      renderItem={renderItem}
-      keyExtractor={(item: any, index: {toString: () => any}) =>
-        index.toString()
-      }
-    />
+const Feed: React.FC<IFeedProps> = ({posts = [], isLoading}) => {
+  return isLoading ? (
+    <Loading>
+      <ActivityIndicator size="large" />
+      <TextLoading>Loading...</TextLoading>
+    </Loading>
+  ) : (
+    <>
+      {posts.map(post => (
+        <Container key={post.id}>
+          <Post {...post} />
+        </Container>
+      ))}
+    </>
+    // Flatlist bring the error because FlatList run inside ScrollView on home component(ScrollView and FlatList share the same logic )so it's duplicated
+    // function renderItem({item}: {item: PostInterface}) {
+    //   return <Post {...item} />;
+    // }
+    // return <FlatList
+    //   data={posts}
+    //   renderItem={renderItem}
+    //   keyExtractor={(item: any, index: {toString: () => any}) =>
+    //     index.toString()
+    //   }
+    // />
   );
 };
 
@@ -220,4 +259,4 @@ const mapStateToProps = (state: any) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps)(Feed);
+export default connect(mapStateToProps, null)(Feed);
