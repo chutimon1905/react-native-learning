@@ -53,7 +53,7 @@ const posts: PostInterface[] = [
     caption: 'Hello React Native !',
     img: require('../assets/post1.jpg'),
     likes: ['9'],
-    comments: [{user: userLisa, comment: 'Cool !!!'}],
+    comments: [{user: userHarry, comment: 'Cool !!!'}],
   },
   {
     id: 2,

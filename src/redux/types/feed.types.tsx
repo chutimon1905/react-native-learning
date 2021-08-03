@@ -21,6 +21,6 @@ export interface PostInterface {
   img: ImageSourcePropType;
   imgUri?: string;
   likes: String[];
-  comments?: CommentInterface[];
+  comments: CommentInterface[];
   isLiked?: boolean;
 }

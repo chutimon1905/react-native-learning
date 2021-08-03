@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -73,7 +73,7 @@ const TextCount = styled.Text`
 const Separator = styled.View`
   width: 100%;
   height: 1px;
-  background: #f9f9f9;
+  background: #e4e6eb;
 `;
 const FooterMenu = styled.View`
   flex-direction: row;
@@ -125,6 +125,7 @@ export const Post: React.FC<PostInterface> = ({
   isLiked,
 }) => {
   const dispatch = useDispatch();
+  const [toggle, setToggle] = useState(false);
 
   function onPostLike(postId: number) {
     dispatch({type: LIKE_POST, payload: postId});
@@ -161,7 +162,9 @@ export const Post: React.FC<PostInterface> = ({
             </IconCount>
             <TextCount>{likeCount(likes)} Likes</TextCount>
           </Row>
-          <TextCount>{comments?.length || 0} Comments</TextCount>
+          <TextCount onPress={() => setToggle(!toggle)}>
+            {comments?.length || 0} Comments
+          </TextCount>
         </FooterCount>
 
         <Separator />
@@ -178,7 +181,7 @@ export const Post: React.FC<PostInterface> = ({
             {isLiked ? <TextClick>Like</TextClick> : <Text>Like</Text>}
           </Button>
 
-          <Button>
+          <Button onPress={() => setToggle(!toggle)}>
             <Icon>
               <MaterialCommunityIcons
                 name="comment-outline"
@@ -200,7 +203,24 @@ export const Post: React.FC<PostInterface> = ({
             <Text>Share</Text>
           </Button>
         </FooterMenu>
+        <Separator />
       </Footer>
+      {toggle &&
+        comments.map(comment => (
+          <>
+            <Header>
+              <Row>
+                <Avatar source={comment.user.avatar} />
+                <View style={{paddingLeft: 10}}>
+                  <User>{comment.user.fullname}</User>
+                  <Row>
+                    <Text>{comment.comment}</Text>
+                  </Row>
+                </View>
+              </Row>
+            </Header>
+          </>
+        ))}
       <BottomDivider />
     </>
   );

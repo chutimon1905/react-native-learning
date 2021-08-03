@@ -19,6 +19,7 @@ export default function* feedSaga() {
       caption: post.caption + ' pokemon:' + pokemon.name,
       imgUri: pokemon.sprites.front_default,
       likes: [],
+      comments: [],
     };
     console.log('addPost');
     console.log(post);
