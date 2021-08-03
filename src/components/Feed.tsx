@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, FlatList, SafeAreaView, View} from 'react-native';
-import styled from 'styled-components/native';
-import Entypo from 'react-native-vector-icons/Entypo';
+import React from 'react';
+import {ActivityIndicator, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Avatar from './Avatar';
-import {PostInterface} from '../redux/types';
+import {useDispatch} from 'react-redux';
+import styled from 'styled-components/native';
+import {LIKE_POST, PostInterface} from '../redux/types';
 import {dateTimeToNowString, likeCount} from '../shared/commonHelper';
-import {connect, useSelector} from 'react-redux';
-const userId = '1';
+import Avatar from './Avatar';
 
 const Container = styled.View`
   flex: 1;
@@ -114,10 +113,6 @@ interface IFeedProps {
   isLoading: boolean;
 }
 
-const selectPostById = (state: any, postId: number) => {
-  return state.posts.find((post: PostInterface) => post.id === postId);
-};
-
 export const Post: React.FC<PostInterface> = ({
   id,
   datetime,
@@ -127,22 +122,13 @@ export const Post: React.FC<PostInterface> = ({
   caption,
   likes,
   comments,
+  isLiked,
 }) => {
-  const [like, onLike] = useState(false);
+  const dispatch = useDispatch();
 
-  function toggleLikeButton() {
-    if (!like && !likes.includes(userId)) {
-      onLike(true);
-      likes.push(userId);
-    } else {
-      onLike(false);
-      likes.pop();
-      console.log('now--->' + likes);
-    }
+  function onPostLike(postId: number) {
+    dispatch({type: LIKE_POST, payload: postId});
   }
-
-  useEffect(() => console.log('UseEffect says:', like));
-
   const {avatar, fullname} = user || {};
   var isHaveImg: boolean = false;
   if (img) isHaveImg = true;
@@ -173,30 +159,23 @@ export const Post: React.FC<PostInterface> = ({
             <IconCount>
               <AntDesign name="like1" size={12} color="#FFFFFF" />
             </IconCount>
-            <TextCount>
-              {/* {like ? likeCount(likes.concat([userId])) : likeCount(likes)}{' '} */}
-              {likeCount(likes)} Likes
-            </TextCount>
+            <TextCount>{likeCount(likes)} Likes</TextCount>
           </Row>
-          <TextCount>{comments?.length || 0} comments</TextCount>
+          <TextCount>{comments?.length || 0} Comments</TextCount>
         </FooterCount>
 
         <Separator />
 
         <FooterMenu>
-          <Button onPress={() => toggleLikeButton()}>
+          <Button onPress={() => onPostLike(id)}>
             <Icon>
-              {like || likes.includes(userId) ? (
+              {isLiked ? (
                 <AntDesign name="like1" size={20} color="#1878f3" />
               ) : (
                 <AntDesign name="like2" size={20} />
               )}
             </Icon>
-            {like || likes.includes(userId) ? (
-              <TextClick>Like</TextClick>
-            ) : (
-              <Text>Like</Text>
-            )}
+            {isLiked ? <TextClick>Like</TextClick> : <Text>Like</Text>}
           </Button>
 
           <Button>
@@ -255,8 +234,4 @@ const Feed: React.FC<IFeedProps> = ({posts = [], isLoading}) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  post: state.post,
-});
-
-export default connect(mapStateToProps, null)(Feed);
+export default Feed;

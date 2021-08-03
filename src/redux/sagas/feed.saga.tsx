@@ -22,7 +22,7 @@ export default function* feedSaga() {
     };
     console.log('addPost');
     console.log(post);
-    yield delay(5000);
+    yield delay(1000);
     yield put({type: ADD_NEW_POST, payload: post});
   }
 

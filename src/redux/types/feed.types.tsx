@@ -22,4 +22,5 @@ export interface PostInterface {
   imgUri?: string;
   likes: String[];
   comments?: CommentInterface[];
+  isLiked?: boolean;
 }

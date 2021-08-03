@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import {Dispatch} from 'redux';
-import styled from 'styled-components/native';
+import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useDispatch} from 'react-redux';
+import styled from 'styled-components/native';
+import {ADD_NEW_POST_REQ} from '../redux/types';
 import Avatar from './Avatar';
-import {ADD_NEW_POST, ADD_NEW_POST_REQ} from '../redux/types';
-import {connect} from 'react-redux';
 
 const Container = styled.View`
   width: 100%;
@@ -71,84 +70,72 @@ interface IPostAdderProps {
   onPress: (caption: string) => any;
 }
 
-export class ToolBar extends React.Component<IPostAdderProps, any> {
-  constructor(props) {
-    super(props);
-    this.state = {caption: ''};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const ToolBar = () => {
+  const [caption, setCaption] = useState('');
+  const dispatch = useDispatch();
 
-  private handleChange = (text: string) => {
-    console.log('set state...' + text);
-
-    this.setState({caption: text});
+  const handleChange = (caption: string) => {
+    console.log('set state...' + caption);
+    setCaption(caption);
   };
-  private handleSubmit = (e: any) => {
+
+  const handleSubmit = () => {
     console.log('Add post...');
-    const caption = this.state.caption;
     console.log(caption);
     if (caption) {
-      this.props.onPress(this.state.caption);
-      this.setState({caption: ''});
+      dispatch({type: ADD_NEW_POST_REQ, caption});
+      setCaption('');
     }
-    e.preventDefault();
   };
-  public render() {
-    return (
-      <>
-        <Container>
-          <Divider />
-          <Row>
-            <Avatar source={require('../assets/user1.jpg')} />
-            <Input
-              placeholder="What's on your mind?"
-              value={this.state.caption}
-              onChangeText={this.handleChange}
-              onSubmitEditing={this.handleSubmit}
+  return (
+    <>
+      <Container>
+        <Divider />
+        <Row>
+          <Avatar source={require('../assets/user1.jpg')} />
+          <Input
+            placeholder="What's on your mind?"
+            value={caption}
+            onChangeText={handleChange}
+            onSubmitEditing={handleSubmit}
+          />
+        </Row>
+        <Row>
+          <Show onPress={handleSubmit}>
+            <TextShow>Post</TextShow>
+          </Show>
+        </Row>
+        <Divider />
+        <Row>
+          <Menu>
+            <Ionicons name="videocam" size={22} color="#F44337" />
+            <MenuText>Live</MenuText>
+          </Menu>
+          <Separator />
+
+          <Menu>
+            <MaterialIcons
+              name="photo-size-select-actual"
+              size={20}
+              color="#4CAF50"
             />
-          </Row>
-          <Row>
-            <Show onPress={this.handleSubmit}>
-              <TextShow>Post</TextShow>
-            </Show>
-          </Row>
-          <Divider />
-          <Row>
-            <Menu>
-              <Ionicons name="videocam" size={22} color="#F44337" />
-              <MenuText>Live</MenuText>
-            </Menu>
-            <Separator />
+            <MenuText>Photo</MenuText>
+          </Menu>
+          <Separator />
 
-            <Menu>
-              <MaterialIcons
-                name="photo-size-select-actual"
-                size={20}
-                color="#4CAF50"
-              />
-              <MenuText>Photo</MenuText>
-            </Menu>
-            <Separator />
+          <Menu>
+            <MaterialCommunityIcons
+              name="video-plus"
+              size={22}
+              color="#9c6dfb"
+            />
+            <MenuText>Room</MenuText>
+          </Menu>
+        </Row>
+      </Container>
+      <BottomDivider />
+    </>
+  );
+};
 
-            <Menu>
-              <MaterialCommunityIcons
-                name="video-plus"
-                size={22}
-                color="#9c6dfb"
-              />
-              <MenuText>Room</MenuText>
-            </Menu>
-          </Row>
-        </Container>
-        <BottomDivider />
-      </>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onPress: (caption: string) => dispatch({type: ADD_NEW_POST_REQ, caption}),
-});
-
-export default connect(null, mapDispatchToProps)(ToolBar);
+export default ToolBar;

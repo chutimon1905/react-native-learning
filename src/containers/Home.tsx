@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react';
-
-import {LogBox, ScrollView} from 'react-native';
-
+import React from 'react';
+import {ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 import AppBar from '../components/AppBar';
+import Feed from '../components/Feed';
+import Story from '../components/Story';
 import ToolBar from '../components/ToolBar';
 import Users from '../components/Users';
-import Story from '../components/Story';
-import Feed from '../components/Feed';
-
-import {useSelector} from 'react-redux';
 import {RootState} from '../redux/reducers';
-import {testData} from '../shared/testData';
 
 interface Props {}
 const Home: React.FC<Props> = props => {
   const posts = useSelector((state: RootState) => state.feed.posts);
   const loading = useSelector((state: RootState) => state.feed.loading);
+
   console.log('Loading posts...');
   console.log({posts});
   console.log({loading});
