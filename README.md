@@ -1,1 +1,1 @@
-# react-native-allianz
+# react-native-learning
